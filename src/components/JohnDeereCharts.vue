@@ -18,19 +18,18 @@ let pandemiaChart;
 let sazonalChart;
 
 const meses = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
-const saz2020 = [22, 26, 25, 17, 18, 58, 10, 26, 24, 26, 33, 27];
 
-function distribuirAnual(total) {
-  const base = saz2020.reduce((a, b) => a + b, 0);
-  return saz2020.map((v) => Math.round((v / base) * total));
-}
-
+// Faturamento mensal R$ mi — Relatório 9, Grupo A (Extração de Informações)
 const sazData = {
-  2020: { d: saz2020, label: '2020 (real)' },
-  2022: { d: distribuirAnual(627), label: '2022 (estimado)' },
-  2023: { d: distribuirAnual(528), label: '2023 (estimado)' },
-  2024: { d: distribuirAnual(478), label: '2024 (estimado)' }
+  2019: [10.9, 5.7, 7.7, 6.0, 7.1, 8.1, 6.5, 12.4, 12.0, 11.4, 6.0, 8.5],
+  2020: [9.9, 12.3, 11.0, 7.0, 8.1, 25.4, 4.6, 14.0, 14.5, 16.5, 13.1, 16.4],
+  2022: [18.5, 31.0, 47.9, 34.6, 52.3, 56.9, 72.1, 66.5, 57.2, 48.2, 35.5, 37.5],
+  2023: [43.0, 35.4, 61.2, 27.6, 41.7, 33.2, 52.7, 36.6, 41.9, 60.4, 51.7, 45.5],
+  2024: [42.0, 34.4, 43.1, 44.6, 56.9, 50.0, 35.9, 45.9, 62.7, 41.5, 0, 0],
+  2025: [48.3, 39.5, 49.6, 51.3, 65.4, 57.5, 41.3, 52.7, 72.1, 47.8, 0, 0]
 };
+
+const weakMonths = new Set([0, 6]);
 
 onMounted(() => {
   anualChart = new Chart('cAnual', {
@@ -141,14 +140,22 @@ onMounted(() => {
     }
   });
 
-  const lowMonths = [6, 7, 8];
+  function sazColors(data) {
+    const peak = Math.max(...data);
+    return data.map((v, i) => {
+      if (weakMonths.has(i)) return OR;
+      if (v === peak && v > 0) return YL;
+      return GR;
+    });
+  }
+
   sazonalChart = new Chart('cSazonal', {
     type: 'bar',
     data: {
       labels: meses,
       datasets: [{
-        data: sazData[2020].d,
-        backgroundColor: meses.map((_, i) => (lowMonths.includes(i) ? OR : GR)),
+        data: sazData[2022],
+        backgroundColor: sazColors(sazData[2022]),
         borderRadius: 4
       }]
     },
@@ -156,10 +163,10 @@ onMounted(() => {
       ...base,
       plugins: {
         ...base.plugins,
-        tooltip: { callbacks: { label: (v) => `${v.raw} vendas` } }
+        tooltip: { callbacks: { label: (v) => `R$ ${v.raw} mi` } }
       },
       scales: {
-        y: { ticks: tk, grid: { color: GRID }, border: { display: false } },
+        y: { ticks: { ...tk, callback: (v) => `${v} mi` }, grid: { color: GRID }, border: { display: false } },
         x: { ticks: tk, grid: { display: false }, border: { display: false } }
       }
     }
@@ -168,11 +175,9 @@ onMounted(() => {
   window.swSaz = (yr, el) => {
     document.querySelectorAll('#tabsSaz .tab').forEach((t) => t.classList.remove('active'));
     el.classList.add('active');
-    const data = sazData[yr].d;
+    const data = sazData[yr];
     sazonalChart.data.datasets[0].data = data;
-    sazonalChart.data.datasets[0].backgroundColor = meses.map((_, i) =>
-      lowMonths.includes(i) ? OR : GR
-    );
+    sazonalChart.data.datasets[0].backgroundColor = sazColors(data);
     sazonalChart.update();
   };
 });

@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>John Deere NE — Relatório Gerencial 2019–2024</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Mono:wght@400;500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+:root{
+  --jd-green:#367c2b;--jd-yellow:#ffde00;--jd-dark:#1a2e1a;
+  --bg:#f5f2ec;--white:#ffffff;--ink:#0d0d0d;
+  --muted:#6b6460;--muted2:#b5afa8;--border:#e0d9d0;
+  --card:#ffffff;--off:#f0ebe3;
+  --r:6px;--r2:12px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:'Outfit',sans-serif;font-size:15px;line-height:1.6;overflow-x:hidden}
+
+/* ── NAV ── */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 2.5rem;height:56px;background:var(--jd-dark);border-bottom:2px solid var(--jd-yellow)}
+.nav-brand{display:flex;align-items:center;gap:10px}
+.nav-logo{font-family:'Fraunces',serif;font-weight:900;font-size:17px;color:var(--jd-yellow);letter-spacing:-0.3px}
+.nav-sep{width:1px;height:18px;background:rgba(255,255,255,0.15)}
+.nav-sub{font-size:12px;font-weight:500;color:rgba(255,255,255,0.5);letter-spacing:.04em}
+.nav-links{display:flex;gap:0}
+.nav-links a{font-size:12px;font-weight:600;color:rgba(255,255,255,0.5);text-decoration:none;padding:6px 14px;letter-spacing:.04em;text-transform:uppercase;transition:color .15s}
+.nav-links a:hover{color:var(--jd-yellow)}
+.nav-tag{font-size:11px;font-weight:700;letter-spacing:.06em;background:var(--jd-yellow);color:var(--jd-dark);padding:4px 12px;border-radius:2px}
+
+/* ── HERO ── */
+#hero{
+  min-height:100vh;padding:80px 2.5rem 3rem;
+  background:var(--jd-dark);position:relative;overflow:hidden;
+  display:flex;align-items:center;
+}
+.hero-bg-text{
+  position:absolute;bottom:-40px;left:-20px;
+  font-family:'Fraunces',serif;font-weight:900;
+  font-size:clamp(180px,22vw,340px);
+  color:rgba(255,255,255,0.03);line-height:1;
+  pointer-events:none;white-space:nowrap;letter-spacing:-10px;
+}
+.hero-stripe{
+  position:absolute;bottom:0;left:0;right:0;
+  height:6px;background:var(--jd-yellow);
+}
+.hero-inner{max-width:1100px;margin:0 auto;width:100%;display:grid;grid-template-columns:1fr 420px;gap:4rem;align-items:center}
+@media(max-width:900px){.hero-inner{grid-template-columns:1fr;gap:3rem}}
+.hero-eyebrow{display:flex;align-items:center;gap:8px;margin-bottom:1.25rem}
+.ey-line{width:28px;height:3px;background:var(--jd-yellow);border-radius:2px}
+.ey-text{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,0.5)}
+h1{font-family:'Fraunces',serif;font-weight:900;font-size:clamp(2.8rem,5vw,4.8rem);line-height:1.05;letter-spacing:-2px;color:#fff;margin-bottom:1.25rem}
+h1 em{font-style:italic;color:var(--jd-yellow)}
+.hero-p{font-size:16px;color:rgba(255,255,255,0.6);line-height:1.75;max-width:480px;margin-bottom:2rem}
+.hero-btns{display:flex;gap:10px;flex-wrap:wrap}
+.btn-y{display:inline-flex;align-items:center;gap:8px;background:var(--jd-yellow);color:var(--jd-dark);padding:11px 24px;border-radius:2px;font-size:13px;font-weight:700;text-decoration:none;letter-spacing:.02em;transition:all .15s}
+.btn-y:hover{background:#ffe433}
+.btn-o{display:inline-flex;align-items:center;background:transparent;color:#fff;padding:11px 24px;border-radius:2px;font-size:13px;font-weight:500;text-decoration:none;border:1px solid rgba(255,255,255,0.2);transition:all .15s}
+.btn-o:hover{border-color:rgba(255,255,255,0.5)}
+.hero-card{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:var(--r2);overflow:hidden}
+.hcard-head{background:var(--jd-green);padding:.9rem 1.25rem;display:flex;align-items:center;justify-content:space-between}
+.hcard-title{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,0.7)}
+.hcard-yr{font-family:'Fraunces',serif;font-size:18px;font-weight:900;color:#fff}
+.hcard-body{display:grid;grid-template-columns:1fr 1fr}
+.hstat{padding:1.1rem 1.25rem;border-bottom:1px solid rgba(255,255,255,0.07);border-right:1px solid rgba(255,255,255,0.07)}
+.hstat:nth-child(even){border-right:none}
+.hstat:nth-last-child(-n+2){border-bottom:none}
+.hs-num{font-family:'Fraunces',serif;font-size:24px;font-weight:900;color:#fff;letter-spacing:-0.5px}
+.hs-num.yellow{color:var(--jd-yellow)}
+.hs-lbl{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:rgba(255,255,255,0.4);margin-top:2px}
+
+/* ── SECTIONS ── */
+section{padding:80px 2.5rem}
+.container{max-width:1100px;margin:0 auto}
+.sh{margin-bottom:3rem;padding-bottom:1.75rem;border-bottom:1px solid var(--border)}
+.sh-ey{display:flex;align-items:center;gap:8px;margin-bottom:.6rem}
+.sh-line{width:20px;height:3px;background:var(--jd-green);border-radius:2px}
+.sh-lbl{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.sh-title{font-family:'Fraunces',serif;font-weight:900;font-size:clamp(2rem,3vw,2.8rem);letter-spacing:-1.2px;color:var(--ink);line-height:1.1}
+.sh-sub{font-size:15px;color:var(--muted);margin-top:.4rem}
+
+/* ── KPI GRID ── */
+.kpi-grid{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--border);border-radius:var(--r2);overflow:hidden;margin-bottom:2.5rem;background:var(--card)}
+@media(max-width:700px){.kpi-grid{grid-template-columns:1fr 1fr}}
+.kpi{padding:1.4rem 1.6rem;border-right:1px solid var(--border);border-bottom:1px solid var(--border)}
+.kpi:nth-child(3n){border-right:none}
+.kpi:nth-last-child(-n+3){border-bottom:none}
+.kpi:hover{background:var(--off)}
+.k-lbl{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:.5rem}
+.k-val{font-family:'Fraunces',serif;font-size:22px;font-weight:900;letter-spacing:-0.5px;color:var(--ink);line-height:1}
+.k-sub{font-size:12px;color:var(--muted);margin-top:.35rem}
+.k-tag{display:inline-block;font-size:10px;font-weight:700;padding:2px 7px;border-radius:2px;margin-top:.4rem}
+.k-tag.green{background:#e6f3e4;color:var(--jd-green)}
+.k-tag.yellow{background:#fff8cc;color:#7a6200}
+.k-tag.red{background:#fceaea;color:#8b2020}
+
+/* ── CHARTS ── */
+.chart-g2{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:18px}
+@media(max-width:800px){.chart-g2{grid-template-columns:1fr}}
+.cc{background:var(--card);border:1px solid var(--border);border-radius:var(--r2);padding:1.6rem;border-top:3px solid var(--jd-green)}
+.cc.full{grid-column:1/-1}
+.cc.yellow-top{border-top-color:var(--jd-yellow)}
+.cc-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:1rem;gap:1rem;flex-wrap:wrap}
+.cc-title{font-family:'Fraunces',serif;font-weight:700;font-size:15px;color:var(--ink)}
+.cc-sub{font-size:12px;color:var(--muted);margin-top:2px}
+.tabs{display:flex;border:1px solid var(--border);border-radius:var(--r);overflow:hidden}
+.tab{font-size:11px;font-weight:700;padding:5px 13px;background:transparent;color:var(--muted);border:none;cursor:pointer;transition:all .15s;letter-spacing:.03em;font-family:'Outfit',sans-serif}
+.tab:not(:last-child){border-right:1px solid var(--border)}
+.tab:hover{background:var(--off);color:var(--ink)}
+.tab.active{background:var(--jd-green);color:#fff}
+
+/* ── CONCLUSOES ── */
+#conclusoes{background:var(--jd-dark);position:relative;overflow:hidden}
+#conclusoes .sh-title{color:#fff}
+#conclusoes .sh-sub{color:rgba(255,255,255,0.5)}
+#conclusoes .sh-line{background:var(--jd-yellow)}
+#conclusoes .sh-lbl{color:rgba(255,255,255,0.4)}
+#conclusoes .sh{border-bottom-color:rgba(255,255,255,0.1)}
+.concl-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-bottom:2rem}
+@media(max-width:700px){.concl-grid{grid-template-columns:1fr}}
+.concl-card{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.09);border-radius:var(--r2);padding:1.5rem;border-left:4px solid var(--cc-color,var(--jd-green))}
+.cc-icon{font-size:24px;margin-bottom:.6rem}
+.cc-title-c{font-family:'Fraunces',serif;font-weight:700;font-size:16px;color:#fff;margin-bottom:.4rem}
+.cc-body{font-size:13px;color:rgba(255,255,255,0.55);line-height:1.7}
+.cc-body strong{color:rgba(255,255,255,0.85);font-weight:600}
+.visao-exec{
+  background:rgba(255,222,0,0.07);border:1px solid rgba(255,222,0,0.2);
+  border-radius:var(--r2);padding:2rem;
+  position:relative;
+}
+.ve-quote{font-family:'Fraunces',serif;font-size:2.5rem;font-weight:900;color:var(--jd-yellow);line-height:0.7;margin-bottom:.5rem;display:block}
+.ve-text{font-size:15px;color:rgba(255,255,255,0.75);line-height:1.8;font-style:italic}
+.ve-attr{font-size:12px;color:rgba(255,255,255,0.35);margin-top:1rem;font-style:normal;letter-spacing:.05em}
+
+/* ── STRATEGY ── */
+#estrategia{background:var(--bg)}
+.strat-tabs{display:flex;gap:0;border:1px solid var(--border);border-radius:var(--r);overflow:hidden;margin-bottom:2rem;background:var(--card)}
+.stab{font-size:13px;font-weight:600;padding:10px 20px;background:transparent;color:var(--muted);border:none;cursor:pointer;transition:all .15s;font-family:'Outfit',sans-serif;flex:1;border-right:1px solid var(--border)}
+.stab:last-child{border-right:none}
+.stab:hover{background:var(--off);color:var(--ink)}
+.stab.active{background:var(--jd-green);color:#fff}
+.strat-panel{display:none}
+.strat-panel.active{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+@media(max-width:800px){.strat-panel.active{grid-template-columns:1fr 1fr}}
+@media(max-width:500px){.strat-panel.active{grid-template-columns:1fr}}
+.s-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r2);padding:1.5rem;transition:transform .2s,box-shadow .2s}
+.s-card:hover{transform:translateY(-2px);box-shadow:0 6px 24px rgba(0,0,0,0.07)}
+.s-num{font-family:'DM Mono',monospace;font-size:11px;font-weight:500;color:var(--muted2);margin-bottom:.6rem;letter-spacing:.05em}
+.s-title{font-weight:700;font-size:14px;color:var(--ink);margin-bottom:.45rem;line-height:1.35}
+.s-body{font-size:13px;color:var(--muted);line-height:1.65}
+.s-tag{display:inline-block;font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:3px 8px;border-radius:2px;margin-top:.6rem;background:#e6f3e4;color:var(--jd-green)}
+
+/* ── RISKS ── */
+#riscos{background:var(--off)}
+.risk-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+@media(max-width:700px){.risk-grid{grid-template-columns:1fr}}
+.risk-block{background:var(--card);border:1px solid var(--border);border-radius:var(--r2);overflow:hidden}
+.rb-head{padding:1rem 1.5rem;display:flex;align-items:center;gap:10px}
+.rb-head.risk{background:#fceaea;border-bottom:1px solid #f0d0d0}
+.rb-head.op{background:#e6f3e4;border-bottom:1px solid #c8e4c5}
+.rb-icon{font-size:18px}
+.rb-title{font-family:'Fraunces',serif;font-weight:700;font-size:16px}
+.rb-head.risk .rb-title{color:#8b2020}
+.rb-head.op .rb-title{color:var(--jd-green)}
+.rb-body{padding:1rem 1.5rem}
+.rb-item{display:flex;align-items:flex-start;gap:10px;padding:.55rem 0;border-bottom:1px solid var(--border)}
+.rb-item:last-child{border-bottom:none}
+.rb-dot{width:7px;height:7px;border-radius:50%;margin-top:6px;flex-shrink:0}
+.rb-dot.red{background:#d94040}
+.rb-dot.green{background:var(--jd-green)}
+.rb-text{font-size:13px;color:var(--ink);line-height:1.5}
+.rb-desc{font-size:12px;color:var(--muted);margin-top:2px}
+
+/* ── CUSTOS ── */
+#custos{background:var(--white)}
+.cost-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+@media(max-width:800px){.cost-grid{grid-template-columns:1fr 1fr}}
+.cost-card{border:1px solid var(--border);border-radius:var(--r2);padding:1.5rem;border-top:3px solid var(--jd-green)}
+.cost-ico{font-size:22px;margin-bottom:.6rem}
+.cost-title{font-weight:700;font-size:14px;color:var(--ink);margin-bottom:.4rem}
+.cost-body{font-size:13px;color:var(--muted);line-height:1.65}
+.cost-badge{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:700;padding:3px 8px;border-radius:2px;margin-top:.5rem;background:#fff8cc;color:#7a6200}
+
+/* ── FOOTER ── */
+footer{background:var(--jd-dark);border-top:3px solid var(--jd-yellow);padding:2.5rem;text-align:center}
+.f-logo{font-family:'Fraunces',serif;font-weight:900;font-size:20px;color:var(--jd-yellow);margin-bottom:.5rem}
+.f-text{font-size:13px;color:rgba(255,255,255,0.4);line-height:1.8}
+
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--muted2);border-radius:2px}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-brand">
+    <div class="nav-logo">John Deere NE</div>
+    <div class="nav-sep"></div>
+    <div class="nav-sub">Relatório Gerencial</div>
+  </div>
+  <div class="nav-links">
+    <a href="#dashboard">Dashboard</a>
+    <a href="#conclusoes">Conclusões</a>
+    <a href="#estrategia">Estratégia</a>
+    <a href="#riscos">Riscos</a>
+  </div>
+  <div class="nav-tag">2019 – 2024</div>
+</nav>
+
+<section id="hero">
+  <div class="hero-bg-text">JD</div>
+  <div class="hero-stripe"></div>
+  <div class="hero-inner">
+    <div>
+      <div class="hero-eyebrow"><div class="ey-line"></div><div class="ey-text">Auditoria Gerencial de Dados</div></div>
+      <h1>John Deere<br/><em>Nordeste</em><br/>2019–2024</h1>
+      <p class="hero-p">Análise estratégica completa com conclusões gerenciais, diagnóstico de performance, riscos operacionais e oportunidades de crescimento para 2025.</p>
+      <div class="hero-btns">
+        <a href="#dashboard" class="btn-y">Ver Análise →</a>
+        <a href="#conclusoes" class="btn-o">Visão Executiva</a>
+      </div>
+    </div>
+    <div>
+      <div class="hero-card">
+        <div class="hcard-head">
+          <div class="hcard-title">Resumo do período</div>
+          <div class="hcard-yr">9.881 registros</div>
+        </div>
+        <div class="hcard-body">
+          <div class="hstat"><div class="hs-num">3.254</div><div class="hs-lbl">Equipamentos vendidos</div></div>
+          <div class="hstat"><div class="hs-num yellow">2022</div><div class="hs-lbl">Melhor ano (627 vendas)</div></div>
+          <div class="hstat"><div class="hs-num">6</div><div class="hs-lbl">Filiais ativas</div></div>
+          <div class="hstat"><div class="hs-num yellow">28%</div><div class="hs-lbl">Wirtgen em 2024</div></div>
+          <div class="hstat"><div class="hs-num">REC</div><div class="hs-lbl">Filial líder 2022/24</div></div>
+          <div class="hstat"><div class="hs-num yellow">Retro</div><div class="hs-lbl">Produto nº1 (35,6%)</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DASHBOARD -->
+<section id="dashboard" style="background:var(--bg)">
+  <div class="container">
+    <div class="sh">
+      <div class="sh-ey"><div class="sh-line"></div><div class="sh-lbl">Dashboard</div></div>
+      <div class="sh-title">Performance operacional</div>
+      <div class="sh-sub">Indicadores consolidados 2019–2024</div>
+    </div>
+
+    <div class="kpi-grid">
+      <div class="kpi"><div class="k-lbl">Melhor ano</div><div class="k-val">2022</div><div class="k-sub">627 vendas consolidadas</div><div class="k-tag green">↑ Pico histórico</div></div>
+      <div class="kpi"><div class="k-lbl">Pior período</div><div class="k-val">Jul/2020</div><div class="k-sub">Apenas 10 vendas no mês</div><div class="k-tag red">Impacto pandemia</div></div>
+      <div class="kpi"><div class="k-lbl">Produto líder</div><div class="k-val">Retroescavadeira</div><div class="k-sub">1.157 unidades — 35,6%</div><div class="k-tag green">Top 3 = 70% do mix</div></div>
+      <div class="kpi"><div class="k-lbl">Filial destaque</div><div class="k-val">Recife (REC)</div><div class="k-sub">863 vendas acumuladas</div><div class="k-tag green">Líder em 2022 e 2024</div></div>
+      <div class="kpi"><div class="k-lbl">Wirtgen 2024</div><div class="k-val">28%</div><div class="k-sub">Vs 0% em 2019</div><div class="k-tag yellow">↑ Expansão forte</div></div>
+      <div class="kpi"><div class="k-lbl">Menor produto</div><div class="k-val">Recicladora</div><div class="k-sub">Apenas 14 unidades (0,4%)</div><div class="k-tag red">Baixo giro</div></div>
+    </div>
+
+    <div class="chart-g2">
+      <div class="cc">
+        <div class="cc-top"><div><div class="cc-title">Vendas anuais (John Deere)</div><div class="cc-sub">Total de equipamentos faturados</div></div></div>
+        <canvas id="cAnual" height="200"></canvas>
+      </div>
+      <div class="cc yellow-top">
+        <div class="cc-top"><div><div class="cc-title">Crescimento Wirtgen vs John Deere</div><div class="cc-sub">Participação % por ano</div></div></div>
+        <canvas id="cWirtgen" height="200"></canvas>
+      </div>
+    </div>
+
+    <div class="chart-g2">
+      <div class="cc">
+        <div class="cc-top"><div><div class="cc-title">Mix de produtos — todas as famílias</div><div class="cc-sub">Quantidade vendida 2019–2024</div></div></div>
+        <canvas id="cProdutos" height="280"></canvas>
+      </div>
+      <div class="cc">
+        <div class="cc-top"><div><div class="cc-title">Desempenho por filial</div><div class="cc-sub">Vendas acumuladas por região</div></div><div class="tabs" id="tabsFil"><button class="tab active" onclick="swFil('total',this)">Total</button><button class="tab" onclick="swFil('2022',this)">2022</button><button class="tab" onclick="swFil('2024',this)">2024</button></div></div>
+        <canvas id="cFilial" height="280"></canvas>
+      </div>
+    </div>
+
+    <div class="cc full">
+      <div class="cc-top"><div><div class="cc-title">Vendas mensais 2020 — Impacto da pandemia</div><div class="cc-sub">Julho de 2020 registrou o pior mês da série histórica: apenas 10 vendas</div></div></div>
+      <canvas id="cPandemia" height="180"></canvas>
+    </div>
+  </div>
+</section>
+
+<!-- CONCLUSÕES -->
+<section id="conclusoes">
+  <div class="container">
+    <div class="sh">
+      <div class="sh-ey"><div class="sh-line"></div><div class="sh-lbl">Conclusões Gerenciais</div></div>
+      <div class="sh-title">O que os dados revelam</div>
+      <div class="sh-sub">Diagnóstico estratégico por dimensão de análise</div>
+    </div>
+
+    <div class="concl-grid">
+      <div class="concl-card" style="--cc-color:var(--jd-yellow)">
+        <div class="cc-icon">📈</div>
+        <div class="cc-title-c">Faturamento & Evolução</div>
+        <div class="cc-body">
+          <strong>2022 foi o melhor ano</strong> com 627 vendas consolidadas. O período 2019–2022 mostrou crescimento contínuo (+139%). Em 2020, <strong>julho foi o pior mês</strong> de toda a série — reflexo direto da pandemia com apenas 10 vendas. A recuperação foi robusta a partir de 2021.
+        </div>
+      </div>
+      <div class="concl-card" style="--cc-color:var(--jd-green)">
+        <div class="cc-icon">🏗️</div>
+        <div class="cc-title-c">Produtos & Concentração</div>
+        <div class="cc-body">
+          <strong>Mais de 70% do faturamento</strong> vem de apenas 3 famílias: Retroescavadeira (35,6%), Escavadeira (18,6%) e Pá Carregadeira (15,9%). Isso indica foco eficiente, mas também <strong>risco de dependência</strong>. Recicladora e Fresadora têm participação marginal.
+        </div>
+      </div>
+      <div class="concl-card" style="--cc-color:#367c2b">
+        <div class="cc-icon">📍</div>
+        <div class="cc-title-c">Filiais & Expansão Regional</div>
+        <div class="cc-body">
+          <strong>Recife (REC) e Salvador (SSA)</strong> dominam o volume histórico. Barreiras (BAY) e Petrolina (PET) aparecem com crescimento. Fortaleza tem desempenho consistente. Leme (LEM) surge com força em 2021. Há <strong>oportunidade clara de expansão</strong> nas regiões menores.
+        </div>
+      </div>
+      <div class="concl-card" style="--cc-color:var(--jd-yellow)">
+        <div class="cc-icon">⚙️</div>
+        <div class="cc-title-c">Wirtgen — Movimento Estratégico</div>
+        <div class="cc-body">
+          A entrada da Wirtgen em 2020 foi o <strong>movimento mais inteligente do período</strong>. De 0% em 2019 para 28% do mix em 2024, a empresa reduziu dependência da linha tradicional e entrou em <strong>obras e pavimentação</strong> — segmento de maior ticket médio e menor sazonalidade.
+        </div>
+      </div>
+    </div>
+
+    <div class="visao-exec">
+      <span class="ve-quote">"</span>
+      <p class="ve-text">Os dados demonstram concentração elevada do faturamento em Recife e nas famílias de escavação e retroescavação. A entrada da Wirtgen representa diversificação estratégica bem-sucedida. Recomendamos expansão comercial nas regiões de maior crescimento — Barreiras e Petrolina — e revisão do mix para produtos de baixa demanda como Recicladora e Fresadora, redirecionando esforços para as famílias líderes. A dependência de poucas filiais e poucos produtos é o principal risco estrutural do negócio.</p>
+      <p class="ve-attr">— Visão Executiva · Relatório de Auditoria John Deere NE 2019–2024</p>
+    </div>
+  </div>
+</section>
+
+<!-- ESTRATÉGIA -->
+<section id="estrategia">
+  <div class="container">
+    <div class="sh">
+      <div class="sh-ey"><div class="sh-line"></div><div class="sh-lbl">Estratégia 2025</div></div>
+      <div class="sh-title">Marketing, Vendas & Expansão</div>
+      <div class="sh-sub">Plano de ação baseado na análise de dados 2019–2024</div>
+    </div>
+
+    <div class="strat-tabs">
+      <button class="stab active" onclick="swStrat('mkt',this)">📣 Marketing</button>
+      <button class="stab" onclick="swStrat('vnd',this)">🤝 Vendas</button>
+      <button class="stab" onclick="swStrat('exp',this)">🗺️ Expansão</button>
+    </div>
+
+    <div class="strat-panel active" id="sp-mkt">
+      <div class="s-card"><div class="s-num">01 / Marketing</div><div class="s-title">Campanhas nos meses de baixo desempenho</div><div class="s-body">Criar campanhas específicas para julho–setembro, historicamente os meses mais fracos. Promoções de financiamento e condições especiais de pagamento nesses períodos.</div><div class="s-tag">Marketing sazonal</div></div>
+      <div class="s-card"><div class="s-num">02 / Marketing</div><div class="s-title">Foco nos produtos líderes — Retroescavadeira e Escavadeira</div><div class="s-body">Concentrar verba de mídia nos produtos com maior saída. Material técnico, cases de sucesso e demonstrações para construtoras e locadoras no NE.</div><div class="s-tag">Produto</div></div>
+      <div class="s-card"><div class="s-num">03 / Marketing</div><div class="s-title">Marketing digital com geolocalização</div><div class="s-body">Campanhas digitais focadas em REC e SSA como hubs, com expansão progressiva para Petrolina e Barreiras. Linkedin e Google Ads para decisores de obras públicas e privadas.</div><div class="s-tag">Digital</div></div>
+      <div class="s-card"><div class="s-num">04 / Marketing</div><div class="s-title">Comunicação da marca Wirtgen no NE</div><div class="s-body">A Wirtgen cresceu 28% do mix em 2024, mas ainda é pouco conhecida. Campanha educativa sobre pavimentação e reciclagem de asfalto para prefeituras e construtoras.</div><div class="s-tag">Wirtgen</div></div>
+      <div class="s-card"><div class="s-num">05 / Marketing</div><div class="s-title">Feiras e eventos regionais</div><div class="s-body">Presença em feiras de construção e agronegócio do Nordeste. O público-alvo da JD frequenta esses ambientes — presença física gera credibilidade e leads qualificados.</div><div class="s-tag">Eventos</div></div>
+      <div class="s-card"><div class="s-num">06 / Marketing</div><div class="s-title">Reduzir esforço em produtos de baixo giro</div><div class="s-body">Recicladora (0,4%) e Fresadora (1,3%) absorvem esforços de marketing sem retorno proporcional. Redirecionar verba para os produtos líderes do mix.</div><div class="s-tag">Otimização</div></div>
+    </div>
+
+    <div class="strat-panel" id="sp-vnd">
+      <div class="s-card"><div class="s-num">01 / Vendas</div><div class="s-title">Treinamento baseado nos melhores vendedores</div><div class="s-body">Mapear e documentar as práticas dos top performers. Criar programa de mentoria com os vendedores de alto desempenho como multiplicadores internos.</div><div class="s-tag">Capital humano</div></div>
+      <div class="s-card"><div class="s-num">02 / Vendas</div><div class="s-title">Metas individuais por filial e produto</div><div class="s-body">Definir metas granulares: por vendedor, filial e família de produto. Histórico de 2019–2024 como base para metas realistas com incentivo para superação.</div><div class="s-tag">Gestão</div></div>
+      <div class="s-card"><div class="s-num">03 / Vendas</div><div class="s-title">Fortalecer equipe comercial em Barreiras e Petrolina</div><div class="s-body">BAY e PET mostram crescimento consistente mas equipe reduzida. Contratar ou realocar vendedores especializados em equipamentos pesados para essas filiais.</div><div class="s-tag">Expansão de equipe</div></div>
+      <div class="s-card"><div class="s-num">04 / Vendas</div><div class="s-title">Programa de relacionamento com clientes frequentes</div><div class="s-body">Clientes como construtoras e locadoras aparecem em múltiplas NFs. Criar programa de fidelidade com condições especiais para recompra e upsell de modelos superiores.</div><div class="s-tag">Retenção</div></div>
+      <div class="s-card"><div class="s-num">05 / Vendas</div><div class="s-title">CRM unificado para toda a rede NE</div><div class="s-body">Centralizar histórico de clientes, propostas e pós-venda. Visibilidade completa do pipeline por filial permite ação rápida em negócios em risco de perda.</div><div class="s-tag">Tecnologia</div></div>
+      <div class="s-card"><div class="s-num">06 / Vendas</div><div class="s-title">Vendas cruzadas Wirtgen + JD</div><div class="s-body">Clientes de escavação são candidatos naturais a equipamentos de pavimentação Wirtgen. Criar kits comerciais que ofereçam soluções completas de obra para o mesmo cliente.</div><div class="s-tag">Cross-sell</div></div>
+    </div>
+
+    <div class="strat-panel" id="sp-exp">
+      <div class="s-card"><div class="s-num">01 / Expansão</div><div class="s-title">Priorizar Barreiras como polo de crescimento</div><div class="s-body">BAY apresenta tendência de crescimento consistente. Investir em infraestrutura da filial, equipe comercial ampliada e portfólio completo de equipamentos pesados.</div><div class="s-tag">Prioridade alta</div></div>
+      <div class="s-card"><div class="s-num">02 / Expansão</div><div class="s-title">Fortalecer Petrolina para o Polo do São Francisco</div><div class="s-body">PET atende uma região de forte agronegócio e obras de irrigação. Expandir com foco em equipamentos de terraplanagem e tratores de esteira para o agro irrigado.</div><div class="s-tag">Agronegócio</div></div>
+      <div class="s-card"><div class="s-num">03 / Expansão</div><div class="s-title">Consolidar liderança em Recife e Salvador</div><div class="s-body">REC e SSA são as filiais com maior volume. Manter investimento para defender posição e explorar o crescimento das obras de infraestrutura urbana nas capitais.</div><div class="s-tag">Defesa de market share</div></div>
+      <div class="s-card"><div class="s-num">04 / Expansão</div><div class="s-title">Expandir presença da Wirtgen para todas as filiais</div><div class="s-body">Wirtgen ainda está concentrada em REC. Ampliar para SSA, FOR e BAY onde obras de pavimentação estão em expansão com PAC e investimentos estaduais.</div><div class="s-tag">Wirtgen</div></div>
+      <div class="s-card"><div class="s-num">05 / Expansão</div><div class="s-title">Avaliar abertura de filial em Teresina (PI)</div><div class="s-body">O Piauí aparece como região de demanda crescente na base de dados. Estudo de viabilidade para estabelecer presença própria, reduzindo dependência de vendas via filiais vizinhas.</div><div class="s-tag">Nova filial</div></div>
+      <div class="s-card"><div class="s-num">06 / Expansão</div><div class="s-title">Desenvolvimento do segmento público municipal</div><div class="s-body">Prefeituras são grandes compradoras de retroescavadeiras e motoniveladoras. Equipe especializada em licitações para capturar editais de obras e saneamento no NE.</div><div class="s-tag">Governo</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- RISCOS E OPORTUNIDADES -->
+<section id="riscos">
+  <div class="container">
+    <div class="sh">
+      <div class="sh-ey"><div class="sh-line"></div><div class="sh-lbl">Riscos & Oportunidades</div></div>
+      <div class="sh-title">Mapa estratégico</div>
+      <div class="sh-sub">Diagnóstico de vulnerabilidades e potencial de crescimento</div>
+    </div>
+    <div class="risk-grid">
+      <div class="risk-block">
+        <div class="rb-head risk"><div class="rb-icon">⚠️</div><div class="rb-title">Riscos Identificados</div></div>
+        <div class="rb-body">
+          <div class="rb-item"><div class="rb-dot red"></div><div><div class="rb-text">Concentração em 3 produtos (70% do mix)</div><div class="rb-desc">Qualquer mudança de mercado nessas famílias afeta o faturamento de forma desproporcional.</div></div></div>
+          <div class="rb-item"><div class="rb-dot red"></div><div><div class="rb-text">Queda de vendas após 2022</div><div class="rb-desc">2023 e 2024 mostram retração em relação ao pico. Sinal de saturação ou perda de competitividade.</div></div></div>
+          <div class="rb-item"><div class="rb-dot red"></div><div><div class="rb-text">Dependência de REC e SSA</div><div class="rb-desc">Mais de 50% das vendas concentradas em 2 filiais. Problema logístico ou comercial nessas regiões afeta toda a rede.</div></div></div>
+          <div class="rb-item"><div class="rb-dot red"></div><div><div class="rb-text">Produtos com baixa saída no estoque</div><div class="rb-desc">Recicladora e Fresadora comprometem capital de giro sem gerar retorno equivalente.</div></div></div>
+          <div class="rb-item"><div class="rb-dot red"></div><div><div class="rb-text">Vulnerabilidade a choques externos</div><div class="rb-desc">Julho/2020 mostrou que a demanda colapsa rapidamente em crises. Falta de reserva estratégica para períodos de baixa.</div></div></div>
+        </div>
+      </div>
+      <div class="risk-block">
+        <div class="rb-head op"><div class="rb-icon">🚀</div><div class="rb-title">Oportunidades de Crescimento</div></div>
+        <div class="rb-body">
+          <div class="rb-item"><div class="rb-dot green"></div><div><div class="rb-text">Expansão da Wirtgen para todo o NE</div><div class="rb-desc">28% do mix em 2024 e crescendo. Potencial de chegar a 40%+ com estratégia agressiva de pavimentação.</div></div></div>
+          <div class="rb-item"><div class="rb-dot green"></div><div><div class="rb-text">Crescimento de Barreiras e Petrolina</div><div class="rb-desc">Duas filiais em expansão com demanda crescente. Investimento agora captura mercado antes da concorrência.</div></div></div>
+          <div class="rb-item"><div class="rb-dot green"></div><div><div class="rb-text">Obras de infraestrutura no NE</div><div class="rb-desc">PAC e investimentos estaduais em rodovias e saneamento geram demanda intensa por toda a linha JD.</div></div></div>
+          <div class="rb-item"><div class="rb-dot green"></div><div><div class="rb-text">Segmento público e licitações</div><div class="rb-desc">Prefeituras nordestinas são grandes compradoras de retroescavadeiras. Equipe especializada pode capturar esse mercado.</div></div></div>
+          <div class="rb-item"><div class="rb-dot green"></div><div><div class="rb-text">Cross-sell JD + Wirtgen</div><div class="rb-desc">Clientes de escavação são candidatos naturais à linha de pavimentação. Potencial de dobrar o ticket médio por cliente.</div></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REDUÇÃO DE CUSTOS -->
+<section id="custos" style="background:var(--white)">
+  <div class="container">
+    <div class="sh">
+      <div class="sh-ey"><div class="sh-line"></div><div class="sh-lbl">Recomendações Gerenciais</div></div>
+      <div class="sh-title">Redução de custos</div>
+      <div class="sh-sub">Ações operacionais baseadas nos dados de 2019–2024</div>
+    </div>
+    <div class="cost-grid">
+      <div class="cost-card"><div class="cost-ico">📦</div><div class="cost-title">Reduzir estoque de baixo giro</div><div class="cost-body">Recicladora e Fresadora comprometem capital de giro. Negociar com a JD condições de consignação ou reduzir pedido mínimo para essas famílias.</div><div class="cost-badge">⬇ Estoque</div></div>
+      <div class="cost-card"><div class="cost-ico">🏭</div><div class="cost-title">Otimizar filiais de menor volume</div><div class="cost-body">FOR, LEM e PET têm estrutura similar a REC/SSA com volume menor. Revisar dimensionamento de equipe e área para adequar custo fixo à receita.</div><div class="cost-badge">⬇ Custo fixo</div></div>
+      <div class="cost-card"><div class="cost-ico">🚛</div><div class="cost-title">Reduzir custos logísticos</div><div class="cost-body">Concentrar entregas por rota e data, aproveitando a proximidade entre filiais do NE. Hub logístico em Recife ou Salvador para distribuição regional.</div><div class="cost-badge">⬇ Frete</div></div>
+      <div class="cost-card"><div class="cost-ico">💰</div><div class="cost-title">Melhorar distribuição regional</div><div class="cost-body">Produtos vendidos em REC mas consumidos em regiões vizinhas geram custo extra. Alocar estoque nas filiais mais próximas do cliente final.</div><div class="cost-badge">⬇ Logística</div></div>
+      <div class="cost-card"><div class="cost-ico">📊</div><div class="cost-title">Investir mais nas regiões lucrativas</div><div class="cost-body">Direcionar verba de marketing e equipe de vendas para REC, SSA e as filiais em crescimento — BAY e PET — onde o ROI é maior e o mercado está receptivo.</div><div class="cost-badge">↑ ROI</div></div>
+      <div class="cost-card"><div class="cost-ico">🔄</div><div class="cost-title">Revisão de portfólio anual</div><div class="cost-body">Produtos com menos de 1% do mix devem passar por revisão anual. Decisão baseada em margem, não só em volume. Descontinuar SKUs de baixo retorno.</div><div class="cost-badge">↑ Margem</div></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="f-logo">John Deere NE · Auditoria Gerencial</div>
+  <p class="f-text">Análise baseada em 9.881 registros de 6 filiais · 2019–2024<br/>Nordeste do Brasil · Equipamentos de Construção e Pavimentação</p>
+</footer>
+
+<script>
+const GR='#367c2b', YL='#ffde00', DK='#1a2e1a', OR='#d97706', RD='#991b1b', BL='#1e40af';
+const GRID='rgba(0,0,0,0.05)';
+const base={responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}}};
+const tk={color:'#6b6460',font:{family:"'Outfit',sans-serif",size:11}};
+
+// Annual sales
+new Chart('cAnual',{type:'bar',data:{
+  labels:['2019','2020','2021','2022','2023','2024'],
+  datasets:[{data:[262,330,428,627,528,478],backgroundColor:[GR,RD,GR,YL,GR,GR],borderRadius:5,borderSkipped:false}]
+},options:{...base,scales:{y:{ticks:{...tk},grid:{color:GRID},border:{display:false}},x:{ticks:tk,grid:{display:false},border:{display:false}}}}});
+
+// Wirtgen vs JD
+new Chart('cWirtgen',{type:'bar',data:{
+  labels:['2019','2020','2021','2022','2023','2024'],
+  datasets:[
+    {label:'John Deere',data:[100,95,93,93,78,72],backgroundColor:GR,borderRadius:[0,0,0,0],stack:'s'},
+    {label:'Wirtgen',data:[0,5,7,7,22,28],backgroundColor:YL,borderRadius:[3,3,3,3],stack:'s'}
+  ]
+},options:{...base,plugins:{legend:{display:true,labels:{color:'#6b6460',font:{family:"'Outfit',sans-serif",size:11},boxWidth:10,borderRadius:2}},tooltip:{callbacks:{label:v=>`${v.dataset.label}: ${v.raw}%`}}},scales:{x:{ticks:tk,grid:{display:false},border:{display:false}},y:{ticks:{...tk,callback:v=>`${v}%`},grid:{color:GRID},border:{display:false},max:100}}}});
+
+// Products
+new Chart('cProdutos',{type:'bar',indexAxis:'y',data:{
+  labels:['Retroescavadeira','Escavadeira','Pá Carregadeira','Compactador','Motoniveladora','Trator Esteira','Vibroacabadora','Fresadora','Recicladora'],
+  datasets:[{data:[1157,606,516,332,252,238,93,42,14],backgroundColor:[GR,GR,GR,YL,YL,YL,OR,OR,RD],borderRadius:3}]
+},options:{...base,scales:{x:{ticks:tk,grid:{color:GRID},border:{display:false}},y:{ticks:tk,grid:{display:false},border:{display:false}}}}});
+
+// Filial
+const filData={
+  total:{l:['REC','SSA','FOR','BAY','PET','LEM'],d:[863,858,414,187,186,145]},
+  '2022':{l:['REC','SSA','FOR','LEM','PET','BAY'],d:[207,202,85,33,32,28]},
+  '2024':{l:['REC','SSA','FOR','PET','BAY','LEM'],d:[130,104,51,25,21,18]}
+};
+let fChart=new Chart('cFilial',{type:'bar',indexAxis:'y',data:{labels:filData.total.l,datasets:[{data:filData.total.d,backgroundColor:GR,borderRadius:3}]},options:{...base,scales:{x:{ticks:tk,grid:{color:GRID},border:{display:false}},y:{ticks:tk,grid:{display:false},border:{display:false}}}}});
+function swFil(k,el){
+  document.querySelectorAll('#tabsFil .tab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+  fChart.data.labels=filData[k].l;
+  fChart.data.datasets[0].data=filData[k].d;
+  fChart.update();
+}
+
+// Pandemia 2020
+new Chart('cPandemia',{type:'line',data:{
+  labels:['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'],
+  datasets:[{data:[22,26,25,17,18,58,10,26,24,26,33,27],borderColor:RD,backgroundColor:'rgba(153,27,27,0.06)',fill:true,tension:0.3,pointRadius:5,pointBackgroundColor:(ctx)=>ctx.dataIndex===6?'#d94040':RD,pointBorderWidth:(ctx)=>ctx.dataIndex===6?3:1}]
+},options:{...base,scales:{y:{ticks:tk,grid:{color:GRID},border:{display:false}},x:{ticks:tk,grid:{display:false},border:{display:false}}},plugins:{...base.plugins,tooltip:{callbacks:{label:v=>`${v.raw} vendas`}}}}});
+
+// Strategy tabs
+function swStrat(id,el){
+  document.querySelectorAll('.stab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.strat-panel').forEach(p=>p.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('sp-'+id).classList.add('active');
+}
+</script>
+</body>
+</html>

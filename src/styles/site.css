@@ -7,6 +7,8 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 .nav-links{display:flex;gap:4px}
 .nav-links a{font-size:13px;font-weight:500;color:var(--muted);text-decoration:none;padding:6px 14px;border-radius:var(--r);transition:all .15s}
 .nav-links a:hover{color:var(--ink);background:var(--off)}
+.nav-links a.nav-phase{color:#367c2b;font-weight:600;background:#e6f3e4}
+.nav-links a.nav-phase:hover{background:#d5ecd1;color:#1a2e1a}
 .nav-pill{font-size:12px;font-weight:600;letter-spacing:.04em;background:var(--blue);color:#fff;padding:5px 14px;border-radius:2px}
 #hero{min-height:100vh;display:flex;align-items:center;padding:100px 3rem 4rem;background:var(--white);border-bottom:1px solid var(--border)}
 .hero-inner{max-width:1100px;margin:0 auto;width:100%;display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center}

@@ -1,5 +1,5 @@
 ---
-// Fase 2 da apresentação — Relatório Gerencial John Deere NE 2019–2024
+import JohnDeereCharts from '../components/JohnDeereCharts.vue';
 ---
 
 <!doctype html>
@@ -9,8 +9,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>John Deere NE — Relatório Gerencial 2019–2024</title>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Mono:wght@400;500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet" />
-<script is:inline src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
-<script is:inline src="https://cdnjs.cloudflare.com/ajax/libs/lucide/0.383.0/umd/lucide.min.js"></script>
 <style is:global>
 :root{
   --jd-green:#367c2b;--jd-yellow:#ffde00;--jd-dark:#1a2e1a;
@@ -103,6 +101,8 @@ section{padding:80px 2.5rem}
 .k-tag.red{background:#fceaea;color:#8b2020}
 
 /* ── CHARTS ── */
+.chart-wrap{position:relative;width:100%}
+.chart-wrap canvas{display:block;width:100%!important;height:100%!important}
 .chart-g2{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:18px}
 @media(max-width:800px){.chart-g2{grid-template-columns:1fr}}
 .cc{background:var(--card);border:1px solid var(--border);border-radius:var(--r2);padding:1.6rem;border-top:3px solid var(--jd-green)}
@@ -275,28 +275,28 @@ footer{background:var(--jd-dark);border-top:3px solid var(--jd-yellow);padding:2
     <div class="chart-g2">
       <div class="cc">
         <div class="cc-top"><div><div class="cc-title">Vendas anuais (John Deere)</div><div class="cc-sub">Total de equipamentos faturados</div></div></div>
-        <canvas id="cAnual" height="200"></canvas>
+        <div class="chart-wrap" style="height:200px"><canvas id="cAnual"></canvas></div>
       </div>
       <div class="cc yellow-top">
         <div class="cc-top"><div><div class="cc-title">Crescimento Wirtgen vs John Deere</div><div class="cc-sub">Participação % por ano</div></div></div>
-        <canvas id="cWirtgen" height="200"></canvas>
+        <div class="chart-wrap" style="height:200px"><canvas id="cWirtgen"></canvas></div>
       </div>
     </div>
 
     <div class="chart-g2">
       <div class="cc">
         <div class="cc-top"><div><div class="cc-title">Mix de produtos — todas as famílias</div><div class="cc-sub">Quantidade vendida 2019–2024</div></div></div>
-        <canvas id="cProdutos" height="280"></canvas>
+        <div class="chart-wrap" style="height:280px"><canvas id="cProdutos"></canvas></div>
       </div>
       <div class="cc">
         <div class="cc-top"><div><div class="cc-title">Desempenho por filial</div><div class="cc-sub">Vendas acumuladas por região</div></div><div class="tabs" id="tabsFil"><button class="tab active" onclick="swFil('total',this)">Total</button><button class="tab" onclick="swFil('2022',this)">2022</button><button class="tab" onclick="swFil('2024',this)">2024</button></div></div>
-        <canvas id="cFilial" height="280"></canvas>
+        <div class="chart-wrap" style="height:280px"><canvas id="cFilial"></canvas></div>
       </div>
     </div>
 
     <div class="cc full">
       <div class="cc-top"><div><div class="cc-title">Vendas mensais 2020 — Impacto da pandemia</div><div class="cc-sub">Julho de 2020 registrou o pior mês da série histórica: apenas 10 vendas</div></div></div>
-      <canvas id="cPandemia" height="180"></canvas>
+      <div class="chart-wrap" style="height:180px"><canvas id="cPandemia"></canvas></div>
     </div>
   </div>
 </section>
@@ -451,55 +451,9 @@ footer{background:var(--jd-dark);border-top:3px solid var(--jd-yellow);padding:2
   <a href="/" class="f-back">← Voltar para a Fase 1 · VW Nordeste</a>
 </footer>
 
+<JohnDeereCharts client:load />
+
 <script is:inline>
-const GR='#367c2b', YL='#ffde00', DK='#1a2e1a', OR='#d97706', RD='#991b1b', BL='#1e40af';
-const GRID='rgba(0,0,0,0.05)';
-const base={responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}}};
-const tk={color:'#6b6460',font:{family:"'Outfit',sans-serif",size:11}};
-
-// Annual sales
-new Chart('cAnual',{type:'bar',data:{
-  labels:['2019','2020','2021','2022','2023','2024'],
-  datasets:[{data:[262,330,428,627,528,478],backgroundColor:[GR,RD,GR,YL,GR,GR],borderRadius:5,borderSkipped:false}]
-},options:{...base,scales:{y:{ticks:{...tk},grid:{color:GRID},border:{display:false}},x:{ticks:tk,grid:{display:false},border:{display:false}}}}});
-
-// Wirtgen vs JD
-new Chart('cWirtgen',{type:'bar',data:{
-  labels:['2019','2020','2021','2022','2023','2024'],
-  datasets:[
-    {label:'John Deere',data:[100,95,93,93,78,72],backgroundColor:GR,borderRadius:[0,0,0,0],stack:'s'},
-    {label:'Wirtgen',data:[0,5,7,7,22,28],backgroundColor:YL,borderRadius:[3,3,3,3],stack:'s'}
-  ]
-},options:{...base,plugins:{legend:{display:true,labels:{color:'#6b6460',font:{family:"'Outfit',sans-serif",size:11},boxWidth:10,borderRadius:2}},tooltip:{callbacks:{label:v=>`${v.dataset.label}: ${v.raw}%`}}},scales:{x:{ticks:tk,grid:{display:false},border:{display:false}},y:{ticks:{...tk,callback:v=>`${v}%`},grid:{color:GRID},border:{display:false},max:100}}}});
-
-// Products
-new Chart('cProdutos',{type:'bar',indexAxis:'y',data:{
-  labels:['Retroescavadeira','Escavadeira','Pá Carregadeira','Compactador','Motoniveladora','Trator Esteira','Vibroacabadora','Fresadora','Recicladora'],
-  datasets:[{data:[1157,606,516,332,252,238,93,42,14],backgroundColor:[GR,GR,GR,YL,YL,YL,OR,OR,RD],borderRadius:3}]
-},options:{...base,scales:{x:{ticks:tk,grid:{color:GRID},border:{display:false}},y:{ticks:tk,grid:{display:false},border:{display:false}}}}});
-
-// Filial
-const filData={
-  total:{l:['REC','SSA','FOR','BAY','PET','LEM'],d:[863,858,414,187,186,145]},
-  '2022':{l:['REC','SSA','FOR','LEM','PET','BAY'],d:[207,202,85,33,32,28]},
-  '2024':{l:['REC','SSA','FOR','PET','BAY','LEM'],d:[130,104,51,25,21,18]}
-};
-let fChart=new Chart('cFilial',{type:'bar',indexAxis:'y',data:{labels:filData.total.l,datasets:[{data:filData.total.d,backgroundColor:GR,borderRadius:3}]},options:{...base,scales:{x:{ticks:tk,grid:{color:GRID},border:{display:false}},y:{ticks:tk,grid:{display:false},border:{display:false}}}}});
-function swFil(k,el){
-  document.querySelectorAll('#tabsFil .tab').forEach(t=>t.classList.remove('active'));
-  el.classList.add('active');
-  fChart.data.labels=filData[k].l;
-  fChart.data.datasets[0].data=filData[k].d;
-  fChart.update();
-}
-
-// Pandemia 2020
-new Chart('cPandemia',{type:'line',data:{
-  labels:['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'],
-  datasets:[{data:[22,26,25,17,18,58,10,26,24,26,33,27],borderColor:RD,backgroundColor:'rgba(153,27,27,0.06)',fill:true,tension:0.3,pointRadius:5,pointBackgroundColor:(ctx)=>ctx.dataIndex===6?'#d94040':RD,pointBorderWidth:(ctx)=>ctx.dataIndex===6?3:1}]
-},options:{...base,scales:{y:{ticks:tk,grid:{color:GRID},border:{display:false}},x:{ticks:tk,grid:{display:false},border:{display:false}}},plugins:{...base.plugins,tooltip:{callbacks:{label:v=>`${v.raw} vendas`}}}}});
-
-// Strategy tabs
 function swStrat(id,el){
   document.querySelectorAll('.stab').forEach(t=>t.classList.remove('active'));
   document.querySelectorAll('.strat-panel').forEach(p=>p.classList.remove('active'));

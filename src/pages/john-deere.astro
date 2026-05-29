@@ -1,5 +1,6 @@
 ---
 import JohnDeereCharts from '../components/JohnDeereCharts.vue';
+import JohnDeereMarketingPlan from '../components/sections/JohnDeereMarketingPlan.astro';
 ---
 
 <!doctype html>
@@ -7,7 +8,7 @@ import JohnDeereCharts from '../components/JohnDeereCharts.vue';
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>John Deere NE — Relatório Gerencial 2019–2024</title>
+<title>John Deere NE — Plano de Marketing & Auditoria 2019–2024</title>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Mono:wght@400;500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet" />
 <style is:global>
 :root{
@@ -148,6 +149,8 @@ section{padding:80px 2.5rem}
 .stab:last-child{border-right:none}
 .stab:hover{background:var(--off);color:var(--ink)}
 .stab.active{background:var(--jd-green);color:#fff}
+.stab.strat-link{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;color:var(--jd-green);font-weight:600;background:#e6f3e4;flex:0 1 auto;padding:10px 16px}
+.stab.strat-link:hover{background:#d5ecd1;color:var(--jd-dark)}
 .strat-panel{display:none}
 .strat-panel.active{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
 @media(max-width:800px){.strat-panel.active{grid-template-columns:1fr 1fr}}
@@ -199,6 +202,85 @@ footer{background:var(--jd-dark);border-top:3px solid var(--jd-yellow);padding:2
 .f-back{display:inline-block;margin-top:1.25rem;font-size:12px;font-weight:600;letter-spacing:.05em;color:var(--jd-yellow);text-decoration:none;border:1px solid rgba(255,222,0,0.3);padding:8px 18px;border-radius:2px;transition:all .15s}
 .f-back:hover{background:rgba(255,222,0,0.1)}
 
+/* ── PLANO DE MARKETING ── */
+#plano-marketing{background:var(--white)}
+.mkt-block{margin-bottom:3rem}
+.mkt-h3{font-family:'Fraunces',serif;font-weight:700;font-size:1.35rem;color:var(--ink);margin-bottom:1.25rem;letter-spacing:-0.5px}
+.mkt-note{font-size:13px;color:var(--muted);margin-bottom:1.25rem;line-height:1.65}
+.obj-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+@media(max-width:700px){.obj-grid{grid-template-columns:1fr}}
+.obj-card{background:var(--off);border:1px solid var(--border);border-radius:var(--r2);padding:1.4rem;border-left:4px solid var(--jd-green)}
+.obj-num{font-family:'DM Mono',monospace;font-size:11px;color:var(--muted2);margin-bottom:.4rem}
+.obj-title{font-weight:700;font-size:15px;color:var(--ink);margin-bottom:.35rem}
+.obj-body{font-size:13px;color:var(--muted);line-height:1.65}
+.obj-body strong{color:var(--ink)}
+.obj-kpi{display:inline-block;margin-top:.6rem;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;background:var(--jd-yellow);color:var(--jd-dark);padding:3px 10px;border-radius:2px}
+.persona-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+@media(max-width:900px){.persona-grid{grid-template-columns:1fr}}
+.persona-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r2);padding:1.5rem}
+.persona-tag{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--jd-green);margin-bottom:.5rem}
+.persona-name{font-family:'Fraunces',serif;font-weight:700;font-size:17px;color:var(--ink);margin-bottom:.5rem}
+.persona-desc{font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:.75rem}
+.persona-list{list-style:none;font-size:12px;color:var(--muted);line-height:1.8}
+.persona-list strong{color:var(--ink)}
+.msg-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+@media(max-width:800px){.msg-grid{grid-template-columns:1fr}}
+.msg-card{background:var(--jd-dark);border-radius:var(--r2);padding:1.5rem;color:#fff}
+.msg-card.wirtgen{border-top:3px solid var(--jd-yellow)}
+.msg-card.defend{border-top:3px solid #6b9fff}
+.msg-brand{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,0.45);margin-bottom:.5rem}
+.msg-headline{font-family:'Fraunces',serif;font-weight:700;font-size:16px;color:var(--jd-yellow);margin-bottom:.5rem;line-height:1.3}
+.msg-body{font-size:13px;color:rgba(255,255,255,0.6);line-height:1.65}
+.journey-row{display:flex;align-items:stretch;gap:6px;overflow-x:auto;padding-bottom:.5rem}
+.journey-step{flex:1;min-width:140px;background:var(--card);border:1px solid var(--border);border-radius:var(--r2);padding:1rem;text-align:center}
+.journey-n{width:28px;height:28px;background:var(--jd-green);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;margin:0 auto .5rem}
+.journey-t{font-weight:700;font-size:13px;color:var(--ink);margin-bottom:.25rem}
+.journey-d{font-size:11px;color:var(--muted);margin-bottom:.35rem}
+.journey-a{font-size:10px;font-weight:600;color:var(--jd-green);text-transform:uppercase;letter-spacing:.04em}
+.journey-arrow{display:flex;align-items:center;color:var(--muted2);font-size:18px;padding:0 2px}
+.channel-list{display:flex;flex-direction:column;gap:12px;margin-bottom:1.25rem}
+.channel-row{display:grid;grid-template-columns:1fr 2fr auto;gap:12px;align-items:center}
+@media(max-width:600px){.channel-row{grid-template-columns:1fr;gap:6px}}
+.channel-name{font-size:13px;font-weight:600;color:var(--ink)}
+.channel-name span{display:block;font-size:11px;font-weight:400;color:var(--muted)}
+.channel-bar{height:10px;background:var(--off);border-radius:5px;overflow:hidden}
+.channel-fill{height:100%;background:var(--jd-green);border-radius:5px}
+.channel-fill.yellow{background:var(--jd-yellow)}
+.channel-pct{font-family:'Fraunces',serif;font-weight:700;font-size:15px;color:var(--ink);min-width:36px;text-align:right}
+.geo-box{background:var(--off);border:1px solid var(--border);border-radius:var(--r2);padding:1.25rem}
+.geo-title{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:.75rem}
+.geo-tags{display:flex;flex-wrap:wrap;gap:8px}
+.geo-t{font-size:12px;font-weight:600;padding:6px 12px;border-radius:2px}
+.geo-t.hub{background:#e6f3e4;color:var(--jd-green)}
+.geo-t.grow{background:#fff8cc;color:#7a6200}
+.geo-t.base{background:var(--card);color:var(--muted);border:1px solid var(--border)}
+.mkt-kpi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+@media(max-width:700px){.mkt-kpi-grid{grid-template-columns:1fr 1fr}}
+.mkt-kpi{background:var(--card);border:1px solid var(--border);border-radius:var(--r2);padding:1.25rem;text-align:center;border-top:3px solid var(--jd-green)}
+.mkt-kpi-lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:.4rem}
+.mkt-kpi-val{font-family:'Fraunces',serif;font-size:28px;font-weight:900;color:var(--ink);letter-spacing:-1px}
+.mkt-kpi-meta{font-size:11px;color:var(--muted);margin-top:.25rem}
+.saz-legend{display:flex;flex-wrap:wrap;gap:1.5rem;margin-top:1rem;font-size:12px;color:var(--muted)}
+.saz-low{color:var(--ink)}
+.saz-high{color:var(--ink)}
+.cal-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+@media(max-width:900px){.cal-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:500px){.cal-grid{grid-template-columns:1fr}}
+.cal-q{background:var(--card);border:1px solid var(--border);border-radius:var(--r2);padding:1.25rem}
+.cal-q.highlight{border-color:var(--jd-yellow);background:#fffef5;box-shadow:0 0 0 1px rgba(255,222,0,0.3)}
+.cal-qtr{font-family:'Fraunces',serif;font-weight:700;font-size:14px;color:var(--jd-green);margin-bottom:1rem;padding-bottom:.5rem;border-bottom:1px solid var(--border)}
+.cal-item{margin-bottom:.75rem}
+.cal-item strong{display:block;font-size:13px;color:var(--ink);margin-bottom:2px}
+.cal-item span{font-size:12px;color:var(--muted);line-height:1.5}
+.camp-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+@media(max-width:800px){.camp-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:500px){.camp-grid{grid-template-columns:1fr}}
+.camp-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r2);padding:1.4rem}
+.camp-n{font-family:'DM Mono',monospace;font-size:11px;color:var(--muted2);margin-bottom:.4rem}
+.camp-t{font-weight:700;font-size:14px;color:var(--ink);margin-bottom:.35rem}
+.camp-d{font-size:12px;color:var(--muted);line-height:1.6}
+.camp-tag{display:inline-block;margin-top:.5rem;font-size:10px;font-weight:700;text-transform:uppercase;padding:3px 8px;border-radius:2px;background:#e6f3e4;color:var(--jd-green)}
+
 ::-webkit-scrollbar{width:4px}
 ::-webkit-scrollbar-track{background:var(--bg)}
 ::-webkit-scrollbar-thumb{background:var(--muted2);border-radius:2px}
@@ -215,8 +297,9 @@ footer{background:var(--jd-dark);border-top:3px solid var(--jd-yellow);padding:2
   <div class="nav-links">
     <a href="/" class="phase">← Fase 1 · VW</a>
     <a href="#dashboard">Dashboard</a>
+    <a href="#plano-marketing">Marketing</a>
     <a href="#conclusoes">Conclusões</a>
-    <a href="#estrategia">Estratégia</a>
+    <a href="#estrategia">Operações</a>
     <a href="#riscos">Riscos</a>
   </div>
   <div class="nav-tag">2019 – 2024</div>
@@ -231,8 +314,8 @@ footer{background:var(--jd-dark);border-top:3px solid var(--jd-yellow);padding:2
       <h1>John Deere<br/><em>Nordeste</em><br/>2019–2024</h1>
       <p class="hero-p">Análise estratégica completa com conclusões gerenciais, diagnóstico de performance, riscos operacionais e oportunidades de crescimento para 2025.</p>
       <div class="hero-btns">
-        <a href="#dashboard" class="btn-y">Ver Análise →</a>
-        <a href="#conclusoes" class="btn-o">Visão Executiva</a>
+        <a href="#plano-marketing" class="btn-y">Plano de Marketing →</a>
+        <a href="#dashboard" class="btn-o">Ver Dados</a>
       </div>
     </div>
     <div>
@@ -322,7 +405,7 @@ footer{background:var(--jd-dark);border-top:3px solid var(--jd-yellow);padding:2
         <div class="cc-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg></div>
         <div class="cc-title-c">Produtos & Concentração</div>
         <div class="cc-body">
-          <strong>Mais de 70% do faturamento</strong> vem de apenas 3 famílias: Retroescavadeira (35,6%), Escavadeira (18,6%) e Pá Carregadeira (15,9%). Isso indica foco eficiente, mas também <strong>risco de dependência</strong>. Recicladora e Fresadora têm participação marginal.
+          <strong>Mais de 70% do volume de vendas</strong> vem de apenas 3 famílias: Retroescavadeira (35,6%), Escavadeira (18,6%) e Pá Carregadeira (15,9%). Isso indica foco eficiente, mas também <strong>risco de dependência</strong>. Recicladora e Fresadora têm participação marginal.
         </div>
       </div>
       <div class="concl-card" style="--cc-color:#367c2b">
@@ -343,37 +426,30 @@ footer{background:var(--jd-dark);border-top:3px solid var(--jd-yellow);padding:2
 
     <div class="visao-exec">
       <span class="ve-quote">"</span>
-      <p class="ve-text">Os dados demonstram concentração elevada do faturamento em Recife e nas famílias de escavação e retroescavação. A entrada da Wirtgen representa diversificação estratégica bem-sucedida. Recomendamos expansão comercial nas regiões de maior crescimento — Barreiras e Petrolina — e revisão do mix para produtos de baixa demanda como Recicladora e Fresadora, redirecionando esforços para as famílias líderes. A dependência de poucas filiais e poucos produtos é o principal risco estrutural do negócio.</p>
+      <p class="ve-text">Os dados demonstram concentração elevada do volume de vendas em Recife e nas famílias de escavação e retroescavação. A entrada da Wirtgen representa diversificação estratégica bem-sucedida. Recomendamos expansão comercial nas regiões de maior crescimento — Barreiras e Petrolina — e revisão do mix para produtos de baixa demanda como Recicladora e Fresadora, redirecionando esforços para as famílias líderes. A dependência de poucas filiais e poucos produtos é o principal risco estrutural do negócio.</p>
       <p class="ve-attr">— Visão Executiva · Relatório de Auditoria John Deere NE 2019–2024</p>
     </div>
   </div>
 </section>
 
-<!-- ESTRATÉGIA -->
+<JohnDeereMarketingPlan />
+
+<!-- ESTRATÉGIA OPERACIONAL -->
 <section id="estrategia">
   <div class="container">
     <div class="sh">
-      <div class="sh-ey"><div class="sh-line"></div><div class="sh-lbl">Estratégia 2025</div></div>
-      <div class="sh-title">Marketing, Vendas & Expansão</div>
-      <div class="sh-sub">Plano de ação baseado na análise de dados 2019–2024</div>
+      <div class="sh-ey"><div class="sh-line"></div><div class="sh-lbl">Plano operacional 2025</div></div>
+      <div class="sh-title">Vendas & Expansão</div>
+      <div class="sh-sub">Ações comerciais e regionais · O plano de marketing está na seção dedicada acima</div>
     </div>
 
     <div class="strat-tabs">
-      <button class="stab active" onclick="swStrat('mkt',this)"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline;vertical-align:-2px;margin-right:6px"><path d="M22 2L11 13"/><path d="M22 2L15 22l-4-9-9-4 19-7z"/></svg>Marketing</button>
-      <button class="stab" onclick="swStrat('vnd',this)"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline;vertical-align:-2px;margin-right:6px"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Vendas</button>
+      <button class="stab active" onclick="swStrat('vnd',this)"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline;vertical-align:-2px;margin-right:6px"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Vendas</button>
       <button class="stab" onclick="swStrat('exp',this)"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline;vertical-align:-2px;margin-right:6px"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>Expansão</button>
+      <a href="#plano-marketing" class="stab strat-link">← Ver plano de Marketing</a>
     </div>
 
-    <div class="strat-panel active" id="sp-mkt">
-      <div class="s-card"><div class="s-num">01 / Marketing</div><div class="s-title">Campanhas nos meses de baixo desempenho</div><div class="s-body">Criar campanhas específicas para julho–setembro, historicamente os meses mais fracos. Promoções de financiamento e condições especiais de pagamento nesses períodos.</div><div class="s-tag">Marketing sazonal</div></div>
-      <div class="s-card"><div class="s-num">02 / Marketing</div><div class="s-title">Foco nos produtos líderes — Retroescavadeira e Escavadeira</div><div class="s-body">Concentrar verba de mídia nos produtos com maior saída. Material técnico, cases de sucesso e demonstrações para construtoras e locadoras no NE.</div><div class="s-tag">Produto</div></div>
-      <div class="s-card"><div class="s-num">03 / Marketing</div><div class="s-title">Marketing digital com geolocalização</div><div class="s-body">Campanhas digitais focadas em REC e SSA como hubs, com expansão progressiva para Petrolina e Barreiras. Linkedin e Google Ads para decisores de obras públicas e privadas.</div><div class="s-tag">Digital</div></div>
-      <div class="s-card"><div class="s-num">04 / Marketing</div><div class="s-title">Comunicação da marca Wirtgen no NE</div><div class="s-body">A Wirtgen cresceu 28% do mix em 2024, mas ainda é pouco conhecida. Campanha educativa sobre pavimentação e reciclagem de asfalto para prefeituras e construtoras.</div><div class="s-tag">Wirtgen</div></div>
-      <div class="s-card"><div class="s-num">05 / Marketing</div><div class="s-title">Feiras e eventos regionais</div><div class="s-body">Presença em feiras de construção e agronegócio do Nordeste. O público-alvo da JD frequenta esses ambientes — presença física gera credibilidade e leads qualificados.</div><div class="s-tag">Eventos</div></div>
-      <div class="s-card"><div class="s-num">06 / Marketing</div><div class="s-title">Reduzir esforço em produtos de baixo giro</div><div class="s-body">Recicladora (0,4%) e Fresadora (1,3%) absorvem esforços de marketing sem retorno proporcional. Redirecionar verba para os produtos líderes do mix.</div><div class="s-tag">Otimização</div></div>
-    </div>
-
-    <div class="strat-panel" id="sp-vnd">
+    <div class="strat-panel active" id="sp-vnd">
       <div class="s-card"><div class="s-num">01 / Vendas</div><div class="s-title">Treinamento baseado nos melhores vendedores</div><div class="s-body">Mapear e documentar as práticas dos top performers. Criar programa de mentoria com os vendedores de alto desempenho como multiplicadores internos.</div><div class="s-tag">Capital humano</div></div>
       <div class="s-card"><div class="s-num">02 / Vendas</div><div class="s-title">Metas individuais por filial e produto</div><div class="s-body">Definir metas granulares: por vendedor, filial e família de produto. Histórico de 2019–2024 como base para metas realistas com incentivo para superação.</div><div class="s-tag">Gestão</div></div>
       <div class="s-card"><div class="s-num">03 / Vendas</div><div class="s-title">Fortalecer equipe comercial em Barreiras e Petrolina</div><div class="s-body">BAY e PET mostram crescimento consistente mas equipe reduzida. Contratar ou realocar vendedores especializados em equipamentos pesados para essas filiais.</div><div class="s-tag">Expansão de equipe</div></div>

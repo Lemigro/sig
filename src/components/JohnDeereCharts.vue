@@ -15,6 +15,22 @@ let wirtgenChart;
 let produtosChart;
 let filialChart;
 let pandemiaChart;
+let sazonalChart;
+
+const meses = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
+const saz2020 = [22, 26, 25, 17, 18, 58, 10, 26, 24, 26, 33, 27];
+
+function distribuirAnual(total) {
+  const base = saz2020.reduce((a, b) => a + b, 0);
+  return saz2020.map((v) => Math.round((v / base) * total));
+}
+
+const sazData = {
+  2020: { d: saz2020, label: '2020 (real)' },
+  2022: { d: distribuirAnual(627), label: '2022 (estimado)' },
+  2023: { d: distribuirAnual(528), label: '2023 (estimado)' },
+  2024: { d: distribuirAnual(478), label: '2024 (estimado)' }
+};
 
 onMounted(() => {
   anualChart = new Chart('cAnual', {
@@ -124,6 +140,41 @@ onMounted(() => {
       }
     }
   });
+
+  const lowMonths = [6, 7, 8];
+  sazonalChart = new Chart('cSazonal', {
+    type: 'bar',
+    data: {
+      labels: meses,
+      datasets: [{
+        data: sazData[2020].d,
+        backgroundColor: meses.map((_, i) => (lowMonths.includes(i) ? OR : GR)),
+        borderRadius: 4
+      }]
+    },
+    options: {
+      ...base,
+      plugins: {
+        ...base.plugins,
+        tooltip: { callbacks: { label: (v) => `${v.raw} vendas` } }
+      },
+      scales: {
+        y: { ticks: tk, grid: { color: GRID }, border: { display: false } },
+        x: { ticks: tk, grid: { display: false }, border: { display: false } }
+      }
+    }
+  });
+
+  window.swSaz = (yr, el) => {
+    document.querySelectorAll('#tabsSaz .tab').forEach((t) => t.classList.remove('active'));
+    el.classList.add('active');
+    const data = sazData[yr].d;
+    sazonalChart.data.datasets[0].data = data;
+    sazonalChart.data.datasets[0].backgroundColor = meses.map((_, i) =>
+      lowMonths.includes(i) ? OR : GR
+    );
+    sazonalChart.update();
+  };
 });
 
 onBeforeUnmount(() => {
@@ -132,7 +183,9 @@ onBeforeUnmount(() => {
   if (produtosChart) produtosChart.destroy();
   if (filialChart) filialChart.destroy();
   if (pandemiaChart) pandemiaChart.destroy();
+  if (sazonalChart) sazonalChart.destroy();
   delete window.swFil;
+  delete window.swSaz;
 });
 </script>
 

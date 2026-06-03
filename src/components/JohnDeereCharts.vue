@@ -19,7 +19,8 @@ let sazonalChart;
 
 const meses = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
 
-// Faturamento mensal R$ mi — Relatório 9, Grupo A (Extração de Informações)
+// Vendas anuais / mix JD·Wirtgen: contagem por ano na base v03 (docs PDF). 2025 = 522 NFs, Wirtgen 29%.
+// Faturamento mensal R$ mi — Relatório 9 (sazonalidade)
 const sazData = {
   2019: [10.9, 5.7, 7.7, 6.0, 7.1, 8.1, 6.5, 12.4, 12.0, 11.4, 6.0, 8.5],
   2020: [9.9, 12.3, 11.0, 7.0, 8.1, 25.4, 4.6, 14.0, 14.5, 16.5, 13.1, 16.4],
@@ -35,8 +36,8 @@ onMounted(() => {
   anualChart = new Chart('cAnual', {
     type: 'bar',
     data: {
-      labels: ['2019', '2020', '2021', '2022', '2023', '2024'],
-      datasets: [{ data: [262, 330, 428, 627, 528, 478], backgroundColor: [GR, RD, GR, YL, GR, GR], borderRadius: 5, borderSkipped: false }]
+      labels: ['2019', '2020', '2021', '2022', '2023', '2024', '2025'],
+      datasets: [{ data: [262, 330, 428, 627, 528, 478, 522], backgroundColor: [GR, RD, GR, YL, GR, GR, GR], borderRadius: 5, borderSkipped: false }]
     },
     options: {
       ...base,
@@ -50,10 +51,10 @@ onMounted(() => {
   wirtgenChart = new Chart('cWirtgen', {
     type: 'bar',
     data: {
-      labels: ['2019', '2020', '2021', '2022', '2023', '2024'],
+      labels: ['2019', '2020', '2021', '2022', '2023', '2024', '2025'],
       datasets: [
-        { label: 'John Deere', data: [100, 95, 93, 93, 78, 72], backgroundColor: GR, borderRadius: [0, 0, 0, 0], stack: 's' },
-        { label: 'Wirtgen', data: [0, 5, 7, 7, 22, 28], backgroundColor: YL, borderRadius: [3, 3, 3, 3], stack: 's' }
+        { label: 'John Deere', data: [100, 95, 93, 93, 78, 72, 71], backgroundColor: GR, borderRadius: [0, 0, 0, 0], stack: 's' },
+        { label: 'Wirtgen', data: [0, 5, 7, 7, 22, 28, 29], backgroundColor: YL, borderRadius: [3, 3, 3, 3], stack: 's' }
       ]
     },
     options: {
